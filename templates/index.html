@@ -37,15 +37,15 @@
         </form>
         {% if image_url %}
             <img src="{{ image_url }}" alt="Processed Image">
-            <div class="predictions">
-                <h2>Predictions:</h2>
-                <ul>
-                {% for prediction in predictions %}
-                    <li>{{ prediction }}</li>
-                {% endfor %}
-                </ul>
-            </div>
         {% endif %}
+        <div class="predictions">
+            <h2>Predictions:</h2>
+            <ul>
+            {% for prediction in predictions %}
+                <li>{{ prediction }}</li>
+            {% endfor %}
+            </ul>
+        </div>
     </div>
 </body>
 </html>

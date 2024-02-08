@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 import time 
-import cv2
+#import cv2
 import requests
 import numpy as np
 
@@ -82,16 +82,17 @@ def process_url():
 
     # Placeholder code to fetch image from URL
     response = requests.get(url)
-    image = cv2.imdecode(np.frombuffer(response.content, np.uint8), cv2.IMREAD_COLOR)
+    #image = cv2.imdecode(np.frombuffer(response.content, np.uint8), cv2.IMREAD_COLOR)
 
     # Placeholder code to process image and get predictions
     predictions = predict_image(json, None, headers, params)
 
     # Save the processed image temporarily
-    cv2.imwrite('static/predicted_image.jpg', image)
+    #cv2.imwrite('static/predicted_image.jpg', image)
 
     # Render the template with the image URL and predictions
-    return render_template('index.html', image_url='/static/predicted_image.jpg', predictions=predictions)
+    #return render_template('index.html', image_url='/static/predicted_image.jpg', predictions=predictions)
+    return render_template('index.html', predictions=predictions)
 
 if __name__ == '__main__':
     app.run(debug=True)
