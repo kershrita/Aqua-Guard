@@ -1,20 +1,13 @@
 from flask import Flask, render_template, request
 import time 
 import cv2
-import operator
+import requests
+import numpy as np
 
 # Global Variables
 _url = 'https://visionlabo-prediction.cognitiveservices.azure.com/customvision/v3.0/Prediction/eddce1c1-f8dc-49f9-9dce-b411b533a1de/classify/iterations/Iteration1/url'
 _key = '719c2acc1cc14e1989cd623db4e1cf57'
 _maxNumRetries = 10
-
-
-from flask import Flask, render_template, request
-import requests
-import cv2
-import numpy as np
-
-app = Flask(__name__)
 
 def predict_image(json, data, headers, params):
 
@@ -32,7 +25,7 @@ def predict_image(json, data, headers, params):
 
     while True:
 
-        response = request( 'post', _url, json = json, data = data, headers = headers, params = params )
+        response = requests.request( 'post', _url, json = json, data = data, headers = headers, params = params )
 
         if response.status_code == 429: 
 
@@ -69,26 +62,36 @@ def predict_image(json, data, headers, params):
         result["predictions"][4]["tagName"]
         ]
 
+app = Flask(__name__)
+
 @app.route('/')
 def index():
-    return render_template('app/templates/index.html')
+    return render_template('index.html')
 
-@app.route('/process_url', methods=['POST'])
+@app.route('/predict', methods=['POST'])
 def process_url():
     url = request.form['url']
     
+    params = {'visualFeatures': 'Color,Categories'} 
+
+    headers = dict()
+    headers['Prediction-Key'] = _key
+    headers['Content-Type'] = 'application/json' 
+
+    json = {'url': url} 
+
     # Placeholder code to fetch image from URL
     response = requests.get(url)
     image = cv2.imdecode(np.frombuffer(response.content, np.uint8), cv2.IMREAD_COLOR)
 
     # Placeholder code to process image and get predictions
-    predictions = predict_image(url)
+    predictions = predict_image(json, None, headers, params)
 
     # Save the processed image temporarily
-    cv2.imwrite('static/processed_image.jpg', image)
+    cv2.imwrite('static/predicted_image.jpg', image)
 
     # Render the template with the image URL and predictions
-    return render_template('index.html', image_url='/static/processed_image.jpg', predictions=predictions)
+    return render_template('index.html', image_url='/static/predicted_image.jpg', predictions=predictions)
 
 if __name__ == '__main__':
     app.run(debug=True)

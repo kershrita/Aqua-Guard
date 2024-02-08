@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beta Aqua Guard Solution</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align items at the top */
+            min-height: 100vh; /* Ensure the body takes up the full viewport height */
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+        }
+        form {
+            margin-bottom: 20px; /* Add some space below the form */
+        }
+        img {
+            display: block;
+            margin: 20px auto;
+            max-width: 80%;
+        }
+        .predictions {
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Enter URL</h1>
+        <form action="/predict" method="post">
+            <input type="text" id="url" name="url" required>
+            <button type="submit">Submit</button>
+        </form>
+        {% if image_url %}
+            <img src="{{ image_url }}" alt="Processed Image">
+            <div class="predictions">
+                <h2>Predictions:</h2>
+                <ul>
+                {% for prediction in predictions %}
+                    <li>{{ prediction }}</li>
+                {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
