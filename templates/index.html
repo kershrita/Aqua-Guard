@@ -6,25 +6,71 @@
     <title>Beta Aqua Guard Solution</title>
     <style>
         body {
+            font-family: Arial, sans-serif;
+            background-image: url('/aq.jpg'); /* Replace 'background-image.jpg' with your image file path */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            margin: 0;
+            padding: 0;
             display: flex;
             justify-content: center;
-            align-items: flex-start; /* Align items at the top */
-            min-height: 100vh; /* Ensure the body takes up the full viewport height */
-            margin: 0;
+            align-items: center;
+            min-height: 100vh;
         }
         .container {
+            background-color: rgba(255, 255, 255, 0.8); /* Adding opacity to the container */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
+        h1, h2 {
+            color: #333;
+        }
         form {
-            margin-bottom: 20px; /* Add some space below the form */
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            width: 70%;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
         }
         img {
             display: block;
             margin: 20px auto;
             max-width: 80%;
+            border-radius: 8px;
         }
         .predictions {
             text-align: left;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+            padding: 8px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
@@ -36,7 +82,7 @@
             <button type="submit">Submit</button>
         </form>
         {% if image_url %}
-            <img src="{{ image_url }}" alt="Processed Image">
+        <img src="{{ image_url }}" alt="Processed Image" style="display: block; margin: 20px auto; max-width: 100%; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
         {% endif %}
         <div class="predictions">
             <h2>Predictions:</h2>
